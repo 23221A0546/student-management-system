@@ -155,7 +155,7 @@ private Cloudinary cloudinary;
     @PostMapping("/save-notice")
     public String saveNotice(
             @RequestParam String title,
-            @RequestParam String description){
+            @RequestParam String description) {
 
         Notice notice = new Notice();
 
@@ -164,16 +164,21 @@ private Cloudinary cloudinary;
 
         noticeService.saveNotice(notice);
 
-        List<Student> students =
-                studentService.getAllStudents();
+        List<Student> students = studentService.getAllStudents();
 
-        for(Student student : students){
-
-            emailService.sendNoticeMail(
-                    student.getEmail(),
-                    title,
-                    description
-            );
+        for (Student student : students) {
+            try {
+                emailService.sendNoticeMail(
+                        student.getEmail(),
+                        title,
+                        description
+                );
+            } catch (Exception e) {
+                System.out.println(
+                        "Failed to send email to: "
+                                + student.getEmail()
+                );
+            }
         }
 
         return "redirect:/admin-dashboard";

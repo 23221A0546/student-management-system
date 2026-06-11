@@ -91,7 +91,7 @@
         <div class="card shadow profile-card text-center p-4"
              data-aos="zoom-in">
 
-            <img th:src="@{'/uploads/' + ${student.photo}}"
+            <img th:src="${student.photo}"
                  class="profile-image mx-auto">
 
             <h3 class="mt-3"

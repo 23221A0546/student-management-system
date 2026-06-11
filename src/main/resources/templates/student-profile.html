@@ -25,7 +25,7 @@
             <div class="text-center mb-4">
 
                 <img th:if="${student.photo != null}"
-                     th:src="@{'/uploads/' + ${student.photo}}"
+                     th:src="${student.photo}"
                      width="150"
                      height="150"
                      class="rounded-circle border">

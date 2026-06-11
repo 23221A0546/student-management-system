@@ -197,7 +197,9 @@
 
                 <td>
                     <img th:if="${student.photo != null}">
-                    <img th:src="${student.photo}" alt="Student Photo">
+                    <img th:src="${student.photo}"
+                         alt="Photo"
+                         style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
                          width="60"
                          height="60"
                          class="rounded-circle">

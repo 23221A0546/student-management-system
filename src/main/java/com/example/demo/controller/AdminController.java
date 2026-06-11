@@ -1,4 +1,6 @@
 package com.example.demo.controller;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.example.demo.service.UserService;
 import com.example.demo.entity.Notice;
 import com.example.demo.entity.Student;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AdminController {
@@ -28,7 +31,8 @@ public class AdminController {
     private EmailService emailService;
 @Autowired
 private  UserService userService;
-
+@Autowired
+private Cloudinary cloudinary;
     @GetMapping("/admin-dashboard")
     public String adminDashboard(
             @RequestParam(required = false) String keyword,
@@ -100,11 +104,14 @@ private  UserService userService;
                     System.currentTimeMillis() + "_"
                             + photoFile.getOriginalFilename();
 
-            photoFile.transferTo(
-                    new File(uploadDir + fileName));
+            Map uploadResult = cloudinary.uploader().upload(
+                    photoFile.getBytes(),
+                    ObjectUtils.emptyMap()
+            );
 
-            student.setPhoto(fileName);
+            String imageUrl = uploadResult.get("secure_url").toString();
 
+            student.setPhoto(imageUrl);
         } else {
 
             Student existingStudent =

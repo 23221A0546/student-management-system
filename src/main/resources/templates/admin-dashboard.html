@@ -196,8 +196,8 @@
                 <td th:text="${student.id}"></td>
 
                 <td>
-                    <img th:if="${student.photo != null}"
-                         th:src="@{'/uploads/' + ${student.photo}}"
+                    <img th:if="${student.photo != null}">
+                    <img th:src="${student.photo}" alt="Student Photo">
                          width="60"
                          height="60"
                          class="rounded-circle">

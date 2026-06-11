@@ -14,17 +14,25 @@ public class EmailService {
     public void sendNoticeMail(
             String email,
             String title,
-            String description){
+            String description) {
 
-        SimpleMailMessage message =
-                new SimpleMailMessage();
+        try {
 
-        message.setTo(email);
+            SimpleMailMessage message = new SimpleMailMessage();
 
-        message.setSubject(title);
+            message.setTo(email);
+            message.setSubject(title);
+            message.setText(description);
+            message.setFrom("akthecomrade@gmail.com");
 
-        message.setText(description);
+            mailSender.send(message);
 
-        mailSender.send(message);
+            System.out.println("Email sent to: " + email);
+
+        } catch (Exception e) {
+
+            System.out.println("Email failed for: " + email);
+            e.printStackTrace();
+        }
     }
 }
